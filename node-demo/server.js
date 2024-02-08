@@ -21,17 +21,27 @@ var server = http.createServer(function(request, response){
 
   console.log('有个傻子发请求过来啦！路径（带查询参数）为：' + pathWithQuery)
 
-  if(path === '/'){
-    response.statusCode = 200
-    response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    response.write(`二哈`)
-    response.end()
-  } else if(path === '/x'){
+  if(path === '/style'){
     response.statusCode = 200
     response.setHeader('Content-Type', 'text/css;charset=utf-8')
-    response.write(`body{color: red;}`)
+    response.write(`body{background-color: #ddd;}h1{color:green;}`)
     response.end()
-  } else {
+  } else if(path === '/script'){
+    response.statusCode = 200
+    response.setHeader('Content-Type', 'text/javascript;charset=utf-8')
+    response.write(`alert("这是JS执行的")`)
+    response.end()
+  } else if(path === '/index'){
+    response.statusCode = 200
+    response.setHeader('Content-Type', 'text/html;charset=utf-8')
+    response.write(`<!DOCTYPE>\n<html>`+
+      '<head><link rel="stylesheet" href="/style">'+
+      '</head><body>'+
+      '<h1>Hello</h1>'+
+      '<script src="/script"></script>'+
+      '</body></html>')
+    response.end()
+}else {
     response.statusCode = 404
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
     response.write(`你输入的路径不存在对应的内容`)
