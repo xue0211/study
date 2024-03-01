@@ -1,33 +1,56 @@
-body{
-    background:grey;
+body {
+    background: grey;
 }
-#yinyang{
+
+@keyframes spin /*旋转*/ {
+    from {
+        transform: rotate(0deg);
+        /*变形      转     0度*/
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+p{
+    text-align: center;
+}
+
+#yinyang {
     width: 200px;
-    height:200px;
+    height: 200px;
     border-radius: 50%;
-    background: linear-gradient(to bottom, #ffffff 1%,#ffffff 50%,#000000 51%,#000000 100%);
+    background: linear-gradient(to bottom, #ffffff 1%, #ffffff 50%, #000000 51%, #000000 100%);
     position: relative;
-    margin: 100px auto;
+    margin: 100px auto 20px;
+    animation-name: spin;
+    animation-duration: 3s; /*动画一个周期的时长*/
+    animation-iteration-count: infinite; 
+    /*动画重复次数，指定 infinite 无限次重复动画*/
+    animation-timing-function: linear; 
+    /*动画在每个周期的持续时间内如何进行*/
 }
-#yinyang::before{
-    content:"";
+
+#yinyang::before {
+    content: "";
     width: 20px;
     height: 20px;
     border-radius: 50%;
     background: white;
     position: absolute;
-    top:50px;
+    top: 50px;
     left: 0;
-    border:40px solid black;
+    border: 40px solid black;
 }
-#yinyang::after{
-    content:"";
+
+#yinyang::after {
+    content: "";
     width: 20px;
     height: 20px;
     border-radius: 50%;
     background: black;
     position: absolute;
-    top:50px;
+    top: 50px;
     right: 0;
-    border:40px solid white;
+    border: 40px solid white;
 }
