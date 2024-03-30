@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的导航</title>
+</head>
+
+<body>
+    <header></header>
+    <main id="main1">
+    </main>
+    <footer></footer>
+    <script>   /*用JS存键盘按键--原版数组的嵌套--数组里面有数组*/
+        var keys = {   /*keys是变量*/
+            '0': { 0: 'q', 1: 'w', 2: 'e', 3: 'r', 4: 't', 5: 'y', 6: 'u', 7: 'i', 8: 'o', 9: 'p', 'length': 10 },
+            '1': { 0: 'a', 1: 's', 2: 'd', 3: 'f', 4: 'g', 5: 'h', 6: 'j', 7: 'k', 8: 'l', 'length': 9 },
+            '2': { 0: 'z', 1: 'x', 2: 'c', 3: 'v', 4: 'b', 5: 'n', 6: 'm', 'length': 7 },
+            'length': 3
+        }
+        var hash = {  /*用JS存储hash*/
+            'q': 'https://www.quotev.com/',
+            'w': 'https://wallhere.com/zh/user/14286',
+            'e': 'https://www.google.com/',
+            'r': 'https://www.ruanyifeng.com/blog/2010/03/css_cookbook.html',
+            't': 'https://css-tricks.com/',
+            'y': 'https://www.iconfont.cn/',
+            'u': 'https://www.bilibili.com/',
+            'i': 'https://www.iciba.com/',
+            'o': 'https://www.baidu.com/',
+            'p': 'https://tympanus.net/codrops/category/playground/',
+            'a': 'https://adamschwartz.co/magic-of-css/',
+            's': 'https://stores.geohey.com/',
+            'd': 'https://dribbble.com/shots',
+            'f': 'https://fangyinghang.com/resume-15-3/index.html',
+            'g': 'https://github.com/xue0211',
+            'h': 'https://dcloud.gitbooks.io/notes/content/febi-bei.html',
+            'j': 'https://jsbin.com/?html,css,output',
+            'k': 'https://docs.uwa.zxy.link/qian-duan-kai-fa-wen-dang',
+            'l': 'https://lib.njtech.edu.cn/',
+            'z': 'https://zhuanlan.zhihu.com/write',
+            'x': 'https://xiedaimala.com/',
+            'c': 'https://www.colorzilla.com/gradient-editor/',
+            'v': 'https://visualgo.net/en',
+            'b': 'https://www.bootcss.com/',
+            'n': 'https://njtech.xybsyw.com/personal/#/workbench',
+            'm': 'https://cssspritestool.com/',
+        }
+        /*在页面里创建3个div*/
+        index = 0
+        while (index < keys['length']) {   /*0、1、2*/
+            div1 = document.createElement('div')  /*声明一个div*/
+            main1.appendChild(div1)                   /*每次循环时main里面会出现1个div*/
+            /*每个div里面创建10个kbd*/
+            index2 = 0
+            while (index2 < 10) {         /*0、1、2、3、4、5、6、7、8、9*/
+                kbd1 = document.createElement('kbd')
+                kbd1.textContent = 'hi'
+                div1.appendChild(kbd1)                /*每次循环时div里面会出现1个kbd*/
+            }
+            index = index + 1
+        }                                      
+    </script>
+</body>
+
+</html>
