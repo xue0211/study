@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的导航</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
     <header></header>
-    <main id="main1">
+    <main>
+        <div class="wrapper" id="main1"></div>
     </main>
     <footer></footer>
     <script>   /*用JS存键盘按键--原版数组的嵌套--数组里面有数组*/
@@ -47,20 +49,33 @@
             'n': 'https://njtech.xybsyw.com/personal/#/workbench',
             'm': 'https://cssspritestool.com/',
         }
+        //遍历 keys,生成 kbd 标签
         /*在页面里创建3个div*/
         index = 0
         while (index < keys['length']) {   /*0、1、2*/
             div1 = document.createElement('div')  /*声明一个div*/
             main1.appendChild(div1)                   /*每次循环时main里面会出现1个div*/
             /*每个div里面创建10个kbd*/
+            row = keys[index] //第一行是第一个数组 第二行是第二个数组 第三行是第三个数组
+            /*console.log(row)*/  //打印出来
             index2 = 0
-            while (index2 < 10) {         /*0、1、2、3、4、5、6、7、8、9*/
-                kbd1 = document.createElement('kbd')
-                kbd1.textContent = 'hi'
+            while (index2 < row['length']) {         //第一行：0、1、2、3、4、5、6、7、8、9;
+                kbd1 = document.createElement('kbd') //第二行：0、1、2、3、4、5、6、7、8; //第三行：0、1、2、3、4、5、6;
+                kbd1.textContent = row[index2] //index2取值：第0~9个 第0~8个 第0~6个 此时键盘生成 
                 div1.appendChild(kbd1)                /*每次循环时div里面会出现1个kbd*/
+                index2 = index2 + 1
             }
             index = index + 1
-        }                                      
+        } 
+
+        //监听键盘事件
+        document.onkeypress = function(x){   //onkeypress：键被按了；x是随便取的名字
+            key = x['key'] //捕获用户按的键:q/w/e/r/t/y/u/i/o/p...
+            website = hash[key] //拿到对应按键的网站
+            console.log(website) 
+            //location.href = /*'http://'+*/ website //打开对应的网站,当前地址栏的地址是website,注意是http协议
+            window.open(website, '_blank') //在新空白窗口打开按键对应的网站
+        }
     </script>
 </body>
 
