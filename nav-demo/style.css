@@ -2,16 +2,26 @@
 a{text-decoration: none;}
 kbd{
     border: 1px solid red;
-    width: 2em; height: 2em; /*为了让按键定型，不得已定死了宽度、高度*/
+    width: 4em; height: 4em; /*为了让按键定型，不得已定死了宽度、高度*/
     display: inline-block; /*kbd是内联元素，为了让上面的宽高生效，变成inline-block元素*/
     text-transform: uppercase; /*将小写字母变为大写字母*/
+    position: relative;
+}
+kbd > button{
+    position: absolute; /*调整button按钮在按键中的位置*/
+    right: 0;
+    bottom: 0;
+    display: none;      /*鼠标hover按键时，button才出现*/
+}
+kbd:hover >button{
+    display: inline-block;  /*button就是inline-block元素*/
 }
 /*模拟键盘造型*/
 #main1 > div:nth-child(2){
-    margin-left: 1em;
+    margin-left: 2em;
 }
 #main1 > div:nth-child(3){
-    margin-left: 2em;
+    margin-left: 4em;
 }
 /*让键盘居中，内联元素：父元素上加text-align:center*/
 main{
