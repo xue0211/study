@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的导航</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <div class="wrapper" id="main1"></div>
+        <!--<kbd class="key">A</kbd>>调式按键的样式-->
+    </main>
+    <footer></footer>
+    <script>
+        //1.初始化数据
+        /*用JS存键盘按键--原版数组的嵌套--数组里面有数组*/
+        /*以下当成伪代码，无须纠结细节语法，目的是实现功能*/
+        //以下优化将代码从线型数组变为了树型
+        var hashA = init() //调init方法，返回hash的两个值---keys,hash
+        var keys = hashA['keys']
+        var hash = hashA['hash']
+
+
+        //2.生成键盘
+        //遍历 keys,生成 kbd 标签
+        /*在页面里创建3个div*/
+        generateKeyboard(keys, hash)
+
+
+        //3.监听用户动作
+        listenToUser(hash)
+
+
+        //下面是工具函数
+        function getFromLocalStorage(name) {
+            return JSON.parse(localStorage.getItem(name) || 'null')
+        }
+        /*function tag(tagName,attributes) { //attributes表示属性，现在需要遍历hash---把hash的key-属性一个个放到div--元素上
+            var element = document.createElement(tagName) //声明一个元素
+            for(var key in attributes){  //遍历属性 , key为className,id,textContent , for... in循环可以遍历一个hash
+                element[key] = attributes[key]  //元素--div的属性 = attributes的key,element就是hash
+            }
+            return element
+        }*/
+        function tag(tagName) {
+            return document.createElement(tagName)
+        }
+        function tag(tagName) {
+            return document.createElement(tagName)
+        }
+
+        function createSpan(textContent) {
+            var span1 = tag('span')
+            span1.textContent = textContent //index2取值：第0~9个 第0~8个 第0~6个 此时键盘生成
+            span1.className = 'text'
+            return span1
+
+        }
+        function createButton(id) {
+            var button1 = tag('button') //button按钮使得用户有机会编辑按键网址
+            button1.textContent = '编辑'
+            button1.id = id             //以下三句实现，用户点击按键A的编辑，在控制台获取到a                
+            button1.onclick = function (x) {
+                var button2 = x['target']       //button被点击的时候，就执行里面的代码
+                //console.log(button2.previousSibling) ///获取到编辑按钮所对应的icon
+                var img2 = button2.previousSibling
+                var key = button2['id']     //用户点击的是什么，target就表示什么;捕获用户点击编辑时的按键：q/w/z...
+                var x = prompt('Please give me a website')  //允许用户输入新网址,将其存到变量x中
+                hash[key] = x  //使用用户输入的新网址替换原按键的网址---hash变更
+                //目前有一个问题，只要用户在当前页面刷新，用户前面的编辑将失效
+                //解决方法：使用LocalStorage，及时保存用户的每一次编辑，在用户刷新时覆盖新产生的hash
+                //原理：将JS变量存到浏览器里---存档
+                img2.src = x + '/favicon.ico' //将原icon改为变更后的icon
+                img2.onerror = function (x) {
+                    x.target.src = 'http://s2.loli.net/2024/04/02/pmBdOnhX4oZ9sIi.jpg'
+                }
+                localStorage.setItem('x', JSON.stringify(hash)) //只要hash出现变更，就把此时的hash存到x里面
+                console.log(hash)
+            }
+            return button1
+        }
+        function createImage(domain) {
+            var img1 = tag('img')  //获取网址对应的icon
+            if (domain) { //存在按键没有网址的可能
+                img1.src = domain + '/favicon.ico' //获取按键对应的网址  
+            } else {
+                img1.src = 'http://s2.loli.net/2024/04/02/pmBdOnhX4oZ9sIi.jpg' //没有网址，icon就是这个图片
+            }
+            img1.onerror = function (x) {  //监听用户的请求事件--icon请求失败的话就将其换成上述图片
+                /*console.log('icon下载失败')
+                console.log(x)*/
+                x.target.src = 'https://s2.loli.net/2024/04/02/pmBdOnhX4oZ9sIi.jpg'
+            }
+            return img1
+        }
+
+        function init() {
+            var keys = {   /*keys是变量*/ //var：声明一个变量，赋值时是使用这个变量
+                '0': { 0: 'q', 1: 'w', 2: 'e', 3: 'r', 4: 't', 5: 'y', 6: 'u', 7: 'i', 8: 'o', 9: 'p', 'length': 10 },
+                '1': { 0: 'a', 1: 's', 2: 'd', 3: 'f', 4: 'g', 5: 'h', 6: 'j', 7: 'k', 8: 'l', 'length': 9 },
+                '2': { 0: 'z', 1: 'x', 2: 'c', 3: 'v', 4: 'b', 5: 'n', 6: 'm', 'length': 7 },
+                'length': 3
+            }
+            var hash = {  /*用JS存储hash*/
+                'q': 'https://www.quotev.com/',
+                'w': 'https://wallhere.com/zh/user/14286',
+                'e': 'https://www.google.com/',
+                'r': 'https://www.ruanyifeng.com/blog/2010/03/css_cookbook.html',
+                't': 'https://css-tricks.com/',
+                'y': 'https://www.iconfont.cn/',
+                'u': 'https://www.bilibili.com/',
+                'i': 'https://www.iciba.com/',
+                'o': 'https://www.baidu.com/',
+                'p': 'https://tympanus.net/codrops/category/playground/',
+                'a': 'https://adamschwartz.co/magic-of-css/',
+                's': 'https://stores.geohey.com/',
+                'd': 'https://dribbble.com/shots',
+                'f': 'https://www.iqiyi.com/',
+                'g': 'https://github.com/',
+                'h': 'https://weibo.com/',
+                'j': 'https://jsbin.com/',
+                'k': 'https://docs.uwa.zxy.link/qian-duan-kai-fa-wen-dang',
+                'l': 'https://lib.njtech.edu.cn/',
+                'z': 'https://www.zhihu.com/',
+                'x': 'https://xiedaimala.com/',
+                'c': 'https://cn.bing.com/',
+                'v': 'https://sm.ms/',
+                'b': 'https://www.bootcss.com/',
+                'n': 'https://njtech.xybsyw.com/',
+                'm': 'https://www.kugou.com/',
+            }
+            //取出lacalStorage 中x对应的hash，用其覆盖因用户刷新产生的hash---读档
+            var hashInLocalStorage = getFromLocalStorage('x')
+            if (hashInLocalStorage) {
+                hash = hashInLocalStorage
+            }
+            return {
+                "keys": keys,
+                "hash": hash
+            }
+        }
+        function generateKeyboard(keys, hash) {
+            for (var index = 0; index < keys['length']; index = index + 1) { /*0、1、2*/
+                var div1 = tag('div')  /*声明一个div*///将每一行按键用一个div包裹，方便调整间距
+                div.className = 'row'
+
+
+                main1.appendChild(div1)                   /*每次循环时main里面会出现1个div*/
+                /*每个div里面创建10个kbd*/
+
+
+                var row = keys[index] //第一行是第一个数组 第二行是第二个数组 第三行是第三个数组
+                /*console.log(row)*/  //打印出来
+                for (var index2 = 0; index2 < row['length']; index2 = index2 + 1) {
+                    var span1 = createSpan(row[index2]) //index2取值：第0~9个 第0~8个 第0~6个 此时键盘生成
+
+                    var button1 = createButton(row[index2])
+
+                    var img1 = createImage(hash[row[index2]])
+
+                    var kbd1 = tag('kbd') //第二行：0、1、2、3、4、5、6、7、8; //第三行：0、1、2、3、4、5、6;
+                    kbd1.className = 'key' //将CSS中.key选择器中的样式赋予所有按键上
+
+
+                    kbd1.appendChild(span1) //让icon和字母定位
+                    kbd1.appendChild(img1)
+                    kbd1.appendChild(button1)
+
+
+                    div1.appendChild(kbd1)                /*每次循环时div里面会出现1个kbd*/
+                }
+
+            }
+        }
+        function listenToUser(hash) {
+            document.onkeypress = function (x) {   //onkeypress：键被按了；x是随便取的名字
+                var key = x['key'] //捕获用户按的键:q/w/e/r/t/y/u/i/o/p...
+                var website = hash[key] //拿到对应按键的网站
+                console.log(website)
+                //location.href = /*'http://'+*/ website //打开对应的网站,当前地址栏的地址是website,注意是http协议
+                window.open(website, '_blank') //在新空白窗口打开按键对应的网站
+            }
+        }
+
+    </script>
+</body>
+
+</html>
