@@ -54,17 +54,17 @@
         }
 
         function createSpan(textContent) {
-            var span1 = tag('span')
-            span1.textContent = textContent //index2取值：第0~9个 第0~8个 第0~6个 此时键盘生成
-            span1.className = 'text'
-            return span1
+            var span = tag('span')
+            span.textContent = textContent //index2取值：第0~9个 第0~8个 第0~6个 此时键盘生成
+            span.className = 'text'
+            return span
 
         } 
         function createButton(id) {
-            var button1 = tag('button') //button按钮使得用户有机会编辑按键网址
-            button1.textContent = '编辑'
-            button1.id = id             //以下三句实现，用户点击按键A的编辑，在控制台获取到a                
-            button1.onclick = function (x) {
+            var button = tag('button') //button按钮使得用户有机会编辑按键网址
+            button.textContent = '编辑'
+            button.id = id             //以下三句实现，用户点击按键A的编辑，在控制台获取到a                
+            button.onclick = function (x) {
                 var button2 = x['target']       //button被点击的时候，就执行里面的代码
                 //console.log(button2.previousSibling) ///获取到编辑按钮所对应的icon
                 var img2 = button2.previousSibling
@@ -81,21 +81,21 @@
                 localStorage.setItem('x', JSON.stringify(hash)) //只要hash出现变更，就把此时的hash存到x里面
                 console.log(hash)
             }
-            return button1
+            return button
         }
         function createImage(domain) {
-            var img1 = tag('img')  //获取网址对应的icon
+            var img = tag('img')  //获取网址对应的icon
             if (domain) { //存在按键没有网址的可能
-                img1.src = domain + '/favicon.ico' //获取按键对应的网址  
+                img.src = domain + '/favicon.ico' //获取按键对应的网址  
             } else {
-                img1.src = 'http://s2.loli.net/2024/04/02/pmBdOnhX4oZ9sIi.jpg' //没有网址，icon就是这个图片
+                img.src = 'http://s2.loli.net/2024/04/02/pmBdOnhX4oZ9sIi.jpg' //没有网址，icon就是这个图片
             }
-            img1.onerror = function (x) {  //监听用户的请求事件--icon请求失败的话就将其换成上述图片
+            img.onerror = function (x) {  //监听用户的请求事件--icon请求失败的话就将其换成上述图片
                 /*console.log('icon下载失败')
                 console.log(x)*/
                 x.target.src = 'https://s2.loli.net/2024/04/02/pmBdOnhX4oZ9sIi.jpg'
             }
-            return img1
+            return img
         }
 
         function init() {
@@ -145,33 +145,33 @@
         }
         function generateKeyboard(keys, hash) {
             for (var index = 0; index < keys['length']; index = index + 1) { /*0、1、2*/
-                var div1 = tag('div')  /*声明一个div*///将每一行按键用一个div包裹，方便调整间距
+                var div = tag('div')  /*声明一个div*///将每一行按键用一个div包裹，方便调整间距
                 div.className = 'row'
 
 
-                main1.appendChild(div1)                   /*每次循环时main里面会出现1个div*/
+                main.appendChild(div)                   /*每次循环时main里面会出现1个div*/
                 /*每个div里面创建10个kbd*/
 
 
                 var row = keys[index] //第一行是第一个数组 第二行是第二个数组 第三行是第三个数组
                 /*console.log(row)*/  //打印出来
                 for (var index2 = 0; index2 < row['length']; index2 = index2 + 1) {
-                    var span1 = createSpan(row[index2]) //index2取值：第0~9个 第0~8个 第0~6个 此时键盘生成
+                    var span = createSpan(row[index2]) //index2取值：第0~9个 第0~8个 第0~6个 此时键盘生成
 
-                    var button1 = createButton(row[index2])
+                    var button = createButton(row[index2])
 
-                    var img1 = createImage(hash[row[index2]])
+                    var img = createImage(hash[row[index2]])
 
-                    var kbd1 = tag('kbd') //第二行：0、1、2、3、4、5、6、7、8; //第三行：0、1、2、3、4、5、6;
-                    kbd1.className = 'key' //将CSS中.key选择器中的样式赋予所有按键上
-
-
-                    kbd1.appendChild(span1) //让icon和字母定位
-                    kbd1.appendChild(img1)
-                    kbd1.appendChild(button1)
+                    var kbd = tag('kbd') //第二行：0、1、2、3、4、5、6、7、8; //第三行：0、1、2、3、4、5、6;
+                    kbd.className = 'key' //将CSS中.key选择器中的样式赋予所有按键上
 
 
-                    div1.appendChild(kbd1)                /*每次循环时div里面会出现1个kbd*/
+                    kbd.appendChild(span) //让icon和字母定位
+                    kbd.appendChild(img)
+                    kbd.appendChild(button)
+
+
+                    div.appendChild(kbd)                /*每次循环时div里面会出现1个kbd*/
                 }
 
             }

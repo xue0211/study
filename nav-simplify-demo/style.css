@@ -19,7 +19,7 @@ kbd {
     position: relative;
 }
 
-kbd>button {
+kbd > button {
     position: absolute;
     /*调整button按钮在按键中的位置*/
     right: 0;
@@ -34,15 +34,15 @@ kbd:hover>button {
 }
 
 /*模拟键盘造型*/
-#main1>div:nth-child(2) {
+#main>div:nth-child(2) {
     margin-left: -35px;
 }
 
-#main1>div:nth-child(3) {
+#main>div:nth-child(3) {
     margin-left: -110px;
 }
 
-#main1 {
+#main {
     display: inline-block;
 }
 
