@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        window.$ = jQuery
+        $(p1).on('click', function () {
+            $(images).css({
+                transform: 'translateX(0)'
+            })
+        })
+        $(p2).on('click', function () {
+            $(images).css({
+                transform: 'translateX(-300px)'
+            })
+        })
+        $(p3).on('click', function () {
+            $(images).css({
+                transform: 'translateX(-600px)'
+            })
+        })
+    </script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="window">
+        <div class="images" id="images">
+            <img src="https://c.wallhere.com/photos/d9/01/digital_art_illustration_artwork_animation_field_outdoors_nature_landscape-2304566.jpg!s2"
+                width=300p alt="">
+            <img src="https://c.wallhere.com/photos/e1/94/Kokuriko_zaka_kara_animated_movies_anime_animation_film_stills_Studio_Ghibli_Moon_trees-2240044.jpg!s2"
+                width=300p alt="">
+            <img src="https://c.wallhere.com/photos/a8/63/Cars_movie_movies_animated_movies_animation_film_stills_Disney_Pixar_Pixar_Animation_Studios_CGI-2244958.jpg!s2"
+                width=300p alt="">
+        </div>
+    </div>
+    <button id="p1">第1张</button>
+    <button id="p2">第2张</button>
+    <button id="p3">第3张</button>
+</body>
+
+</html>
