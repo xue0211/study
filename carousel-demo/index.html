@@ -20,27 +20,33 @@
                 width=300 height=169 alt="">
         </div>
     </div>
-    <button id="p1">第1张</button>
-    <button id="p2">第2张</button>
-    <button id="p3">第3张</button>
+    <span id="buttons">
+        <span>第1张</span>
+        <span>第2张</span>
+        <span>第3张</span>
+    </span>
     <script>
         window.$ = jQuery
-        $(p1).on('click', function (x) {   //x里面有关于这个事件的所有信息
-            $(images).css({
-                transform: 'translateX(0)'
-            })
-        }) //封装p1得到一个新对象，该对象提供API：on，on接受事件名(click)，事件被触发后要执行的函数function(){}两个参数
-        $(p2).on('click', function () {
-            $(images).css({
-                transform: 'translateX(-300px)'
-            })
-        })
-        $(p3).on('click', function () {
-            $(images).css({
-                transform: 'translateX(-600px)'
-            })
-        })
+        var allButtons = $('#buttons > span')  //allButtons是DOM对象
 
+        for (let i = 0; i < allButtons.length; i++) {
+            $(allButtons[i]).on('click', function (x) {
+                //console.log(x.currentTarget)    获取到的不是用户点击的按钮，而是监听的按钮
+                var index = $(x.currentTarget).index() //获取$(x.currentTarget)在父节点中的位置并返回
+                var n = index * -300
+                $('#images').css({
+                    transform: 'translate(' + n + 'px)'
+                })
+            })
+        }
+        //自动轮播
+        var n = 0
+        allButtons.eq(n % 3).trigger('click')  //eq自动将DOM对象封装成jQuery对象
+
+        setInterval(() => {
+            n += 1
+            allButtons.eq(n % 3).trigger('click')
+        }, 1000);
     </script>
 </body>
 
