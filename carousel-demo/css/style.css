@@ -1,12 +1,12 @@
 .images{
     display: flex;
     align-items: flex-start;
-    border: 1px solid red;
+    transition: transform 0.5s;
 }
 .images > img{
+
 }
 .window{
-    border: 2px solid green;
     width: 300px;
     overflow: hidden;
 }
