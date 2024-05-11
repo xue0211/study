@@ -33,20 +33,46 @@
             $(allButtons[i]).on('click', function (x) {
                 //console.log(x.currentTarget)    获取到的不是用户点击的按钮，而是监听的按钮
                 var index = $(x.currentTarget).index() //获取$(x.currentTarget)在父节点中的位置并返回
-                var n = index * -300
+                var p = index * -300
                 $('#images').css({
-                    transform: 'translate(' + n + 'px)'
+                    transform: 'translate(' + p + 'px)'
                 })
+                n = index
+                activeButton(allButtons.eq(n))
             })
         }
         //自动轮播
         var n = 0
-        allButtons.eq(n % 3).trigger('click')  //eq自动将DOM对象封装成jQuery对象
+        var size = allButtons.length
+        playSlide(n % size)   //eq自动将DOM对象封装成jQuery对象
 
-        setInterval(() => {
-            n += 1
-            allButtons.eq(n % 3).trigger('click')
-        }, 1000);
+
+        var timerId = setTimer()
+        function setTimer() {
+            return setInterval(() => {
+                n += 1
+                playSlide(n % size)    //播放第几张图片
+            }, 3000)
+        }
+
+        function playSlide(index) {
+            allButtons.eq(index).trigger('click')
+        }
+
+        function activeButton($button) {
+            $button
+                .addClass('red')
+                .siblings('.red').removeClass('red')
+        }
+
+        //关掉自动轮播
+        $('.window').on('mouseenter', function () {
+            window.clearInterval(timerId)
+        })
+        //再次轮播
+        $('.window').on('mouseleave', function () {
+            timerId = setTimer()
+        })
     </script>
 </body>
 
