@@ -11,7 +11,33 @@ bindEvents()
 
 
 function bindEvents() {
-    $buttons.eq(0).on('click', function () {
+
+    $('#buttonWrapper').on('click', 'button', function (e) {
+        let $button = $(e.currentTarget)
+        let index = $button.index()
+        if (current === $button.length - 1 && index === 0) {
+            //从最后一张到第一张
+            $slides.css({ transform: `translateX(${-($button.length + 1) * 400}px)` })
+                .one('transitionend', function () {
+                    $slides.hide().offset()
+                    $slides.css({ transform: `translateX(${-(index + 1) * 400}px)` }).show()
+                })
+        } else if (current === 0 && index === $button.length - 1) {
+            //从第一张到最后一张
+            $slides.css({ transform: `translateX(0px)` })
+                .one('transitionend', function () {
+                    $slides.hide().offset()
+                    $slides.css({ transform: `translateX(${-(index + 1) + 400}px)` }).show()
+                })
+        } else {
+            $slides.css({ transform: `translateX(${-(index + 1) * 400}px)` })
+        }
+        current = index
+
+    })
+}
+
+    /*$buttons.eq(0).on('click', function () {
         if (current == 2) {
             console.log('说明你是从最后一张到第一张')
             $slides.css({ transform: 'translateX(-1600px)' })
@@ -51,16 +77,17 @@ function bindEvents() {
 
     })
 }
+*/
 
 
 
-function makeFakeSlides() {
-    let $firstCopy = $images.eq(0).clone(true)
-    //console.log($firstCopy[0].outerHTML)
-    let $lastCopy = $images.eq($images.length - 1).clone(true)
-    //console.log($lastCopy[0].outerHTML)
+    function makeFakeSlides() {
+        let $firstCopy = $images.eq(0).clone(true)
+        //console.log($firstCopy[0].outerHTML)
+        let $lastCopy = $images.eq($images.length - 1).clone(true)
+        //console.log($lastCopy[0].outerHTML)
 
-    $slides.append($firstCopy)  //把clone的第一张加在d第三张的后面
-    $slides.prepend($lastCopy)   //把clone的最后一张加在第一张的前面
+        $slides.append($firstCopy)  //把clone的第一张加在d第三张的后面
+        $slides.prepend($lastCopy)   //把clone的最后一张加在第一张的前面
 
-}
+    }
