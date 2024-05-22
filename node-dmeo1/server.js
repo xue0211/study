@@ -30,7 +30,7 @@ var server = http.createServer(function(request, response){
     response.setHeader('Content-Type', 'text/css')
     response.write(string)
     response.end()
-  } else if(path === './main.js'){
+  } else if(path === '/main.js'){
     var string = fs.readFileSync('./main.js', 'utf8')
     response.setHeader('Content-Type', 'application/javascript')
     response.write(string)
