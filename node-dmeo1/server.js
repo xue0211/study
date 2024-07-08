@@ -21,34 +21,31 @@ var server = http.createServer(function (request, response) {
 
 
   if (path === '/') {  //如果用户请求的是 / 路径
-    var string = fs.readFileSync('./index.html', 'utf8')
-    var amount = fs.readFileSync('./db', 'utf8') //amount 是 string
-    string = string.replace('&&&amount&&&', amount)
+    let string = fs.readFileSync('./index.html', 'utf8')
+    response.statusCode = 200
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
     response.write(string)
     response.end()
-  } else if (path === '/style.css') {
-    var string = fs.readFileSync('./style.css', 'utf8')
-    response.setHeader('Content-Type', 'text/css')
-    response.write(string)
-    response.end()
   } else if (path === '/main.js') {
-    var string = fs.readFileSync('./main.js', 'utf8')
-    response.setHeader('Content-Type', 'application/javascript')
+    let string = fs.readFileSync('./main.js', 'utf8')
+    response.statusCode = 200
+    response.setHeader('Content-Type', 'text/javascript;charset=utf-8')
     response.write(string)
     response.end()
-  } else if (path === '/pay') {
-    var amount = fs.readFileSync('./db', 'utf8')  //100
-    var newAmount = amount - 1
-    if (Math.random() > 0.5) {
-      fs.writeFileSync('./db', newAmount)
-      response.setHeader('Content-Type', 'image/jpg')
-      response.statusCode = 200
-      response.write(fs.readFileSync('./1.jpg!s2'))
-    } else {
-      response.statusCode = 400
-      response.write('fail')
-    }
+  } else if (path === '/xxx') {
+    response.statusCode = 200
+    response.setHeader('Content-Type', 'text/json;charset=utf-8')
+    response.write(`
+    {
+       "note":{
+          "to": "BTS",
+          "from": "xue",
+          "heading": "打招呼",
+          "content": "Hello"
+       }
+    } 
+    `
+    )
     response.end()
   } else {
     response.statusCode = 404
